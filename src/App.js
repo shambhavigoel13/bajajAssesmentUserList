@@ -1,23 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import ListCards from "./components/ListCards.js";
+import axios from "axios";
+import React, { useState,useEffect } from 'react';
 
 function App() {
+const [users, setUsers] = useState([]);
+  const getUsers = () => axios.get("https://raw.githubusercontent.com/srijanDubey/chitkara-test-api-mock/main/data.json").then((response) => {
+    setUsers(response.data.data);
+    console.log(response.data.data);
+  });
+  useEffect(() => getUsers(), []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container my-5">
+      <ListCards users={users} />
     </div>
   );
 }
